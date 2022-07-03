@@ -19,12 +19,17 @@ class IsEvenNumberRequestHandler(tornado.web.RequestHandler):
         else:
             self.write(f"{number} is not valid integer")
 
+class StudentCourseInfoRequestHandler(tornado.web.RequestHandler):
+    def get(self, student_name, course_id):
+        self.write(f"Dear {student_name}, you are viewing course {course_id}.\n")
+
 
 if __name__ == "__main__":
     app = tornado.web.Application([
         (r'/', BasicRequestHandler),
         (r'/books', BooksRequestHandler),
-        (r'/even', IsEvenNumberRequestHandler)
+        (r'/even', IsEvenNumberRequestHandler),
+        (r'/course/([a-z]+)/([0-9]+)', StudentCourseInfoRequestHandler)
     ])
 
     port = 8080
