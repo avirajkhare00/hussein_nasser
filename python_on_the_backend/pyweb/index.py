@@ -34,6 +34,14 @@ class BooksNameJsonResponseRequestHandler(tornado.web.RequestHandler):
 
         self.write(json.dumps(books_content))
 
+    def post(self):
+        book_name = self.get_argument("book_name")
+        books_file = open("books.txt", 'a')
+        books_file.write(f'{book_name}\n')
+        books_file.close()
+
+        self.write(json.dumps({"message": "Book added successfully"}))
+
 
 if __name__ == "__main__":
     app = tornado.web.Application([
