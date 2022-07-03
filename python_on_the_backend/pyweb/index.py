@@ -42,12 +42,17 @@ class BooksNameJsonResponseRequestHandler(tornado.web.RequestHandler):
 
         self.write(json.dumps({"message": "Book added successfully"}))
 
+class BooksManager(tornado.web.RequestHandler):
+    def get(self):
+        self.render("books_manager.html")
+
 
 if __name__ == "__main__":
     app = tornado.web.Application([
         (r'/', BasicRequestHandler),
         (r'/even', IsEvenNumberRequestHandler),
         (r'/books', BooksRequestHandler),
+        (r'/books_manager', BooksManager),
         (r'/books_json_response', BooksNameJsonResponseRequestHandler),
         (r'/course/([a-z]+)/([0-9]+)', StudentCourseInfoRequestHandler)
     ])

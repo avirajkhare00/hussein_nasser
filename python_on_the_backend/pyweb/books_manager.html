@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Manager</title>
+</head>
+<body>
+    <h2>You can add books here. Also view all the books.</h2>
+    <h3>Available books:</h3>
+    <div><ul id="available_books"></ul></div>
+    <h3>Add a book below</h3>
+    <input type="text" id="book_name" />
+    <button id="add_book">Add</button>
+
+    <script>
+        var ul = document.getElementById("available_books")
+        fetch("../books_json_response")
+            .then(response => response.json())
+            .then(jsonResponse => jsonResponse.forEach(book => {
+                let li = document.createElement('li')
+                li.appendChild(document.createTextNode(book))
+                ul.appendChild(li)
+            }))
+
+        document.getElementById("add_book").addEventListener("click", e => {
+            let book_name = document.getElementById("book_name").value
+            fetch(`../books_json_response?book_name=${book_name}`, {"method" : "POST"})
+                .then(response => response.json())
+                .then(jsonResponse => alert(jsonResponse.message))
+            })
+    </script>
+</body>
+</html>
