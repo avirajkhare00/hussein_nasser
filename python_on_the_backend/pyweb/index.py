@@ -10,10 +10,21 @@ class BooksRequestHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("books.html")
 
+class IsEvenNumberRequestHandler(tornado.web.RequestHandler):
+    def get(self):
+        number = self.get_argument("number")
+        if(number.isdigit()):
+            r = "odd" if int(number) % 2 else "even"
+            self.write(f"The integer {number} is {r}.")
+        else:
+            self.write(f"{number} is not valid integer")
+
+
 if __name__ == "__main__":
     app = tornado.web.Application([
         (r'/', BasicRequestHandler),
-        (r'/books', BooksRequestHandler)
+        (r'/books', BooksRequestHandler),
+        (r'/even', IsEvenNumberRequestHandler)
     ])
 
     port = 8080
